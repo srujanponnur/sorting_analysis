@@ -39,7 +39,6 @@ pip-delete-this-directory.txt
 
 # Unit test / coverage reports
 htmlcov/
-.idea/
 .tox/
 .nox/
 .coverage
@@ -50,14 +49,15 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
+.hypothesis/
 .pytest_cache/
 
-# Translations
+ Translations
 *.mo
 *.pot
 
 # Django stuff:
-*.log
+#*.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -128,3 +128,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#pycharm
+.idea/
