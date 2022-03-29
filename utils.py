@@ -12,7 +12,7 @@ def compare_dates(file_input1, file_input2):
 def is_sorted(file_input):
     length = len(file_input)
     index = 0
-    while index and index-1 < length:
+    while 0 <= index-1 < length:
         if compare_dates(file_input[index], file_input[index+1]):
             return False
         index += 1
