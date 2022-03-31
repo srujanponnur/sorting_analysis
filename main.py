@@ -1,10 +1,11 @@
 from time import time
+import time
 from os import path, listdir
 import os
 from optparse import OptionParser
 from insertion_sort import InsertionSort
-from utils import is_sorted
-
+from merge_sort import MergeSort
+from utils import compare_dates, is_sorted
 
 parser = OptionParser()
 parser.add_option('-p', '--path', default=path.join(os.getcwd(), 'data'), help='the path of the dataset', type='string',
