@@ -1,4 +1,11 @@
 import datetime
+from os import path, listdir
+import os
+
+
+def create_dir(input_path):
+    if not path.exists(input_path):
+        os.mkdir(input_path)
 
 
 def compare_dates(file_input1, file_input2):
