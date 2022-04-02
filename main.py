@@ -2,10 +2,8 @@ from time import time
 from os import path, listdir
 import os
 from optparse import OptionParser
-from insertion_sort import InsertionSort
 from collections import defaultdict
-from merge_sort import MergeSort
-from utils import compare_dates, is_sorted, create_dir
+from utils import compare_dates, is_sorted, create_dir, get_sort_object
 import json
 
 parser = OptionParser()
@@ -19,6 +17,8 @@ parser.add_option('-d', '--dest', default=path.join(os.getcwd(), 'sorted_data'),
                   type='string', dest='sorted_data_path')
 parser.add_option('-r', '--tpath', default=path.join(os.getcwd(), 'results'), help='the path of the result JSON',
                   type='string', dest='result_path')
+parser.add_option('-a', '--algo', default="1", help='0 - Insertion Sort, 1 - Merge Sort, 2 - Tim Sort',
+                  type='int', dest='algo')
 
 (options, args) = parser.parse_args()
 
@@ -27,11 +27,8 @@ print(options.data_path, options.tries, options.sorted_data_path)
 create_dir(options.sorted_data_path)
 create_dir(options.result_path)
 
-if not path.exists(options.sorted_data_path):
-    os.mkdir(options.sorted_data_path)
+sort_object = get_sort_object(options.algo)
 
-# data_path = path.join('data', 'C')
-# files = 6
 for dir_name in listdir(options.data_path):
     cur_dir = path.join(options.data_path, dir_name)
     dest_dir = path.join(options.sorted_data_path, dir_name)
@@ -50,18 +47,18 @@ for dir_name in listdir(options.data_path):
             print("Time taken to load input is", end-start)
             for i in range(options.dtries):
                 unsorted_data = [i for i in lines]
-                sorted_list, time_taken = InsertionSort().sort(unsorted_data)
+                sorted_list, time_taken = sort_object.sort(unsorted_data)
                 print(f"Dummy Try-{i} time_taken is {time_taken}")
 
             for i in range(options.tries):
                 unsorted_data = [i for i in lines]
-                sorted_list, time_taken = InsertionSort().sort(unsorted_data)
+                sorted_list, time_taken = sort_object.sort(unsorted_data)
                 print(f"Try-{i} time_taken is {time_taken}, is sorted: {is_sorted(sorted_list)}")
                 time_map[file].append(time_taken)
 
             with open(dest_file_path, 'wb+') as fp2:
                 fp2.writelines(sorted_list)
-    result_path = path.join(options.result_path, dir_name+'.json')
+    result_path = path.join(options.result_path, dir_name+'_'+options.algo+'.json')
     print(time_map)
     with open(result_path, 'w+') as fp3:
         json.dump(time_map, fp3)

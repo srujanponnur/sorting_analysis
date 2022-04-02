@@ -1,5 +1,8 @@
 import datetime
 from os import path, listdir
+from insertion_sort import InsertionSort
+from merge_sort import MergeSort
+from tim_sort import TimSort
 import os
 
 
@@ -24,3 +27,16 @@ def is_sorted(file_input):
             return False
         index += 1
     return True
+
+
+def get_sort_object(algo):
+    ret_obj = None
+    if algo == 0:
+        ret_obj = InsertionSort()
+    elif algo == 1:
+        ret_obj = MergeSort()
+    elif algo == 2:
+        ret_obj = TimSort()
+    return  ret_obj
+
+
