@@ -37,6 +37,6 @@ def get_sort_object(algo):
         ret_obj = MergeSort()
     elif algo == 2:
         ret_obj = TimSort()
-    return  ret_obj
+    return ret_obj
 
 
