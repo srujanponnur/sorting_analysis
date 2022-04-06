@@ -1,10 +1,13 @@
-from time import time
+from time import process_time
 from os import path, listdir
 import os
 from optparse import OptionParser
 from collections import defaultdict
-from utils import compare_dates, is_sorted, create_dir, get_sort_object
+from utils import is_sorted, create_dir
 import json
+from insertion_sort import InsertionSort
+from merge_sort import MergeSort
+from tim_sort import TimSort
 
 parser = OptionParser()
 parser.add_option('-p', '--path', default=path.join(os.getcwd(), 'data'), help='the path of the dataset', type='string',
@@ -26,8 +29,18 @@ print(options.data_path, options.tries, options.sorted_data_path)
 
 create_dir(options.sorted_data_path)
 create_dir(options.result_path)
-
+print(options.algo)
+def get_sort_object(algo):
+    ret_obj = None
+    if algo == 0:
+        ret_obj = InsertionSort()
+    elif algo == 1:
+        ret_obj = MergeSort()
+    elif algo == 2:
+        ret_obj = TimSort()
+    return ret_obj
 sort_object = get_sort_object(options.algo)
+print(sort_object)
 
 for dir_name in listdir(options.data_path):
     cur_dir = path.join(options.data_path, dir_name)
@@ -39,11 +52,11 @@ for dir_name in listdir(options.data_path):
     for file in listdir(cur_dir):
         file_path = path.join(cur_dir, file)
         dest_file_path = path.join(dest_dir, file)
-        start = time()
+        start = process_time()
         with open(file_path, 'rb') as fp:
             lines = fp.readlines()
             print("Number of lines are",  len(lines))
-            end = time()
+            end = process_time()
             print("Time taken to load input is", end-start)
             for i in range(options.dtries):
                 unsorted_data = [i for i in lines]
@@ -58,11 +71,10 @@ for dir_name in listdir(options.data_path):
 
             with open(dest_file_path, 'wb+') as fp2:
                 fp2.writelines(sorted_list)
-    result_path = path.join(options.result_path, dir_name+'_'+options.algo+'.json')
+    result_path = path.join(options.result_path, dir_name+'_'+str(options.algo)+'.json')
     print(time_map)
     with open(result_path, 'w+') as fp3:
         json.dump(time_map, fp3)
-    break
 
 
 

@@ -1,6 +1,6 @@
 from utils import compare_dates
 import datetime
-import time
+from time import process_time
 
 
 class MergeSort:
@@ -9,7 +9,7 @@ class MergeSort:
         pass
 
     def sort(self, file_input):
-        start = time.time()
+        start = process_time()
         if len(file_input) > 1:
             mid = len(file_input)//2
 
@@ -40,5 +40,5 @@ class MergeSort:
                 file_input[k] = R[j]
                 j += 1
                 k += 1
-        end = time.time()
+        end = process_time()
         return file_input, (end-start)
