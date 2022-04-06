@@ -1,6 +1,6 @@
 from utils import compare_dates
 import datetime
-from time import time
+from time import process_time
 
 
 class InsertionSort:
@@ -10,7 +10,7 @@ class InsertionSort:
 
     def sort(self, file_input):
         length = len(file_input)
-        start = time()
+        start = process_time()
         for i in range(length-1):
             key = file_input[i]
             j = i-1
@@ -18,6 +18,6 @@ class InsertionSort:
                 file_input[j+1] = file_input[j]
                 j -= 1
             file_input[j+1] = key
-        end = time()
+        end = process_time()
         return file_input, (end-start)
 
